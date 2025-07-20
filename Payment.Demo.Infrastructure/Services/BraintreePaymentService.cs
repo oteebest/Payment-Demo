@@ -52,6 +52,7 @@ namespace Payment.Demo.Infrastructure.Services
                     CustomFields = request.Metadata
                 };
 
+
                 var result = await _gateway.Transaction.SaleAsync(transactionRequest);
 
                 if (result.IsSuccess())
