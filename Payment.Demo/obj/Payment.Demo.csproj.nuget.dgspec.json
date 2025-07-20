@@ -1,0 +1,489 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Projects\\Personal\\Payments\\Payment.Demo\\Payment.Demo\\Payment.Demo.csproj": {}
+  },
+  "projects": {
+    "C:\\Projects\\Personal\\Payments\\Payment.Demo\\Payment.Demo.Application.Contracts\\Payment.Demo.Application.Contracts.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Projects\\Personal\\Payments\\Payment.Demo\\Payment.Demo.Application.Contracts\\Payment.Demo.Application.Contracts.csproj",
+        "projectName": "Payment.Demo.Application.Contracts",
+        "projectPath": "C:\\Projects\\Personal\\Payments\\Payment.Demo\\Payment.Demo.Application.Contracts\\Payment.Demo.Application.Contracts.csproj",
+        "packagesPath": "C:\\Users\\oteeb\\.nuget\\packages\\",
+        "outputPath": "C:\\Projects\\Personal\\Payments\\Payment.Demo\\Payment.Demo.Application.Contracts\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\oteeb\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
+          "https://api.nuget.org/v3/index.json": {},
+          "https://nuget.telerik.com/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "C:\\Projects\\Personal\\Payments\\Payment.Demo\\Payment.Demo.Core\\Payment.Demo.Core.csproj": {
+                "projectPath": "C:\\Projects\\Personal\\Payments\\Payment.Demo\\Payment.Demo.Core\\Payment.Demo.Core.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.100"
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.101/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Projects\\Personal\\Payments\\Payment.Demo\\Payment.Demo.Application\\Payment.Demo.Application.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Projects\\Personal\\Payments\\Payment.Demo\\Payment.Demo.Application\\Payment.Demo.Application.csproj",
+        "projectName": "Payment.Demo.Application",
+        "projectPath": "C:\\Projects\\Personal\\Payments\\Payment.Demo\\Payment.Demo.Application\\Payment.Demo.Application.csproj",
+        "packagesPath": "C:\\Users\\oteeb\\.nuget\\packages\\",
+        "outputPath": "C:\\Projects\\Personal\\Payments\\Payment.Demo\\Payment.Demo.Application\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\oteeb\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
+          "https://api.nuget.org/v3/index.json": {},
+          "https://nuget.telerik.com/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "C:\\Projects\\Personal\\Payments\\Payment.Demo\\Payment.Demo.Application.Contracts\\Payment.Demo.Application.Contracts.csproj": {
+                "projectPath": "C:\\Projects\\Personal\\Payments\\Payment.Demo\\Payment.Demo.Application.Contracts\\Payment.Demo.Application.Contracts.csproj"
+              },
+              "C:\\Projects\\Personal\\Payments\\Payment.Demo\\Payment.Demo.Domain\\Payment.Demo.Domain.csproj": {
+                "projectPath": "C:\\Projects\\Personal\\Payments\\Payment.Demo\\Payment.Demo.Domain\\Payment.Demo.Domain.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.100"
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.Extensions.Logging.Abstractions": {
+              "target": "Package",
+              "version": "[9.0.7, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.101/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Projects\\Personal\\Payments\\Payment.Demo\\Payment.Demo.Core\\Payment.Demo.Core.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Projects\\Personal\\Payments\\Payment.Demo\\Payment.Demo.Core\\Payment.Demo.Core.csproj",
+        "projectName": "Payment.Demo.Core",
+        "projectPath": "C:\\Projects\\Personal\\Payments\\Payment.Demo\\Payment.Demo.Core\\Payment.Demo.Core.csproj",
+        "packagesPath": "C:\\Users\\oteeb\\.nuget\\packages\\",
+        "outputPath": "C:\\Projects\\Personal\\Payments\\Payment.Demo\\Payment.Demo.Core\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\oteeb\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
+          "https://api.nuget.org/v3/index.json": {},
+          "https://nuget.telerik.com/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.100"
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.101/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Projects\\Personal\\Payments\\Payment.Demo\\Payment.Demo.Domain\\Payment.Demo.Domain.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Projects\\Personal\\Payments\\Payment.Demo\\Payment.Demo.Domain\\Payment.Demo.Domain.csproj",
+        "projectName": "Payment.Demo.Domain",
+        "projectPath": "C:\\Projects\\Personal\\Payments\\Payment.Demo\\Payment.Demo.Domain\\Payment.Demo.Domain.csproj",
+        "packagesPath": "C:\\Users\\oteeb\\.nuget\\packages\\",
+        "outputPath": "C:\\Projects\\Personal\\Payments\\Payment.Demo\\Payment.Demo.Domain\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\oteeb\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
+          "https://api.nuget.org/v3/index.json": {},
+          "https://nuget.telerik.com/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "C:\\Projects\\Personal\\Payments\\Payment.Demo\\Payment.Demo.Core\\Payment.Demo.Core.csproj": {
+                "projectPath": "C:\\Projects\\Personal\\Payments\\Payment.Demo\\Payment.Demo.Core\\Payment.Demo.Core.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.100"
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.101/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Projects\\Personal\\Payments\\Payment.Demo\\Payment.Demo.Infrastructure\\Payment.Demo.Infrastructure.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Projects\\Personal\\Payments\\Payment.Demo\\Payment.Demo.Infrastructure\\Payment.Demo.Infrastructure.csproj",
+        "projectName": "Payment.Demo.Infrastructure",
+        "projectPath": "C:\\Projects\\Personal\\Payments\\Payment.Demo\\Payment.Demo.Infrastructure\\Payment.Demo.Infrastructure.csproj",
+        "packagesPath": "C:\\Users\\oteeb\\.nuget\\packages\\",
+        "outputPath": "C:\\Projects\\Personal\\Payments\\Payment.Demo\\Payment.Demo.Infrastructure\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\oteeb\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
+          "https://api.nuget.org/v3/index.json": {},
+          "https://nuget.telerik.com/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "C:\\Projects\\Personal\\Payments\\Payment.Demo\\Payment.Demo.Application.Contracts\\Payment.Demo.Application.Contracts.csproj": {
+                "projectPath": "C:\\Projects\\Personal\\Payments\\Payment.Demo\\Payment.Demo.Application.Contracts\\Payment.Demo.Application.Contracts.csproj"
+              },
+              "C:\\Projects\\Personal\\Payments\\Payment.Demo\\Payment.Demo.Core\\Payment.Demo.Core.csproj": {
+                "projectPath": "C:\\Projects\\Personal\\Payments\\Payment.Demo\\Payment.Demo.Core\\Payment.Demo.Core.csproj"
+              },
+              "C:\\Projects\\Personal\\Payments\\Payment.Demo\\Payment.Demo.Domain\\Payment.Demo.Domain.csproj": {
+                "projectPath": "C:\\Projects\\Personal\\Payments\\Payment.Demo\\Payment.Demo.Domain\\Payment.Demo.Domain.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.100"
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Braintree": {
+              "target": "Package",
+              "version": "[5.34.0, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[9.0.7, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[9.0.7, )"
+            },
+            "Microsoft.EntityFrameworkCore.Sqlite": {
+              "target": "Package",
+              "version": "[9.0.7, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[9.0.7, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.101/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Projects\\Personal\\Payments\\Payment.Demo\\Payment.Demo\\Payment.Demo.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Projects\\Personal\\Payments\\Payment.Demo\\Payment.Demo\\Payment.Demo.csproj",
+        "projectName": "Payment.Demo",
+        "projectPath": "C:\\Projects\\Personal\\Payments\\Payment.Demo\\Payment.Demo\\Payment.Demo.csproj",
+        "packagesPath": "C:\\Users\\oteeb\\.nuget\\packages\\",
+        "outputPath": "C:\\Projects\\Personal\\Payments\\Payment.Demo\\Payment.Demo\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\oteeb\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
+          "https://api.nuget.org/v3/index.json": {},
+          "https://nuget.telerik.com/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "C:\\Projects\\Personal\\Payments\\Payment.Demo\\Payment.Demo.Application\\Payment.Demo.Application.csproj": {
+                "projectPath": "C:\\Projects\\Personal\\Payments\\Payment.Demo\\Payment.Demo.Application\\Payment.Demo.Application.csproj"
+              },
+              "C:\\Projects\\Personal\\Payments\\Payment.Demo\\Payment.Demo.Infrastructure\\Payment.Demo.Infrastructure.csproj": {
+                "projectPath": "C:\\Projects\\Personal\\Payments\\Payment.Demo\\Payment.Demo.Infrastructure\\Payment.Demo.Infrastructure.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.100"
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore.Design": {
+              "target": "Package",
+              "version": "[9.0.7, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.101/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

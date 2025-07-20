@@ -1,0 +1,15 @@
+C:\Projects\Personal\Payments\Payment.Demo\Payment.Demo.Application.Contracts\bin\Debug\net8.0\Payment.Demo.Application.Contracts.deps.json
+C:\Projects\Personal\Payments\Payment.Demo\Payment.Demo.Application.Contracts\bin\Debug\net8.0\Payment.Demo.Application.Contracts.dll
+C:\Projects\Personal\Payments\Payment.Demo\Payment.Demo.Application.Contracts\bin\Debug\net8.0\Payment.Demo.Application.Contracts.pdb
+C:\Projects\Personal\Payments\Payment.Demo\Payment.Demo.Application.Contracts\obj\Debug\net8.0\Payment.Demo.Application.Contracts.GeneratedMSBuildEditorConfig.editorconfig
+C:\Projects\Personal\Payments\Payment.Demo\Payment.Demo.Application.Contracts\obj\Debug\net8.0\Payment.Demo.Application.Contracts.AssemblyInfoInputs.cache
+C:\Projects\Personal\Payments\Payment.Demo\Payment.Demo.Application.Contracts\obj\Debug\net8.0\Payment.Demo.Application.Contracts.AssemblyInfo.cs
+C:\Projects\Personal\Payments\Payment.Demo\Payment.Demo.Application.Contracts\obj\Debug\net8.0\Payment.Demo.Application.Contracts.csproj.CoreCompileInputs.cache
+C:\Projects\Personal\Payments\Payment.Demo\Payment.Demo.Application.Contracts\obj\Debug\net8.0\Payment.Demo.Application.Contracts.dll
+C:\Projects\Personal\Payments\Payment.Demo\Payment.Demo.Application.Contracts\obj\Debug\net8.0\refint\Payment.Demo.Application.Contracts.dll
+C:\Projects\Personal\Payments\Payment.Demo\Payment.Demo.Application.Contracts\obj\Debug\net8.0\Payment.Demo.Application.Contracts.pdb
+C:\Projects\Personal\Payments\Payment.Demo\Payment.Demo.Application.Contracts\obj\Debug\net8.0\ref\Payment.Demo.Application.Contracts.dll
+C:\Projects\Personal\Payments\Payment.Demo\Payment.Demo.Application.Contracts\bin\Debug\net8.0\Payment.Demo.Core.dll
+C:\Projects\Personal\Payments\Payment.Demo\Payment.Demo.Application.Contracts\bin\Debug\net8.0\Payment.Demo.Core.pdb
+C:\Projects\Personal\Payments\Payment.Demo\Payment.Demo.Application.Contracts\obj\Debug\net8.0\Payment.Demo.Application.Contracts.csproj.AssemblyReference.cache
+C:\Projects\Personal\Payments\Payment.Demo\Payment.Demo.Application.Contracts\obj\Debug\net8.0\Payment..CAC31FA6.Up2Date

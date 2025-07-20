@@ -1,0 +1,573 @@
+﻿@using Payment.Demo.Application.Contracts.ProductServices.Dto
+@model ProductDto?
+
+@{
+    ViewData["Title"] = Model?.Name ?? "Product Details";
+}
+
+@section HeaderScripts {
+    <script src="https://js.braintreegateway.com/web/dropin/1.45.1/js/dropin.min.js"></script>
+}
+
+@section Styles {
+    <style>
+        .product-hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0 -30px 30px -30px;
+            border-radius: 0 0 15px 15px;
+        }
+
+        .product-image-container {
+            background: linear-gradient(45deg, #f8f9fa, #e9ecef);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+            .product-image-container::before {
+                content: '';
+                position: absolute;
+                top: -50%;
+                left: -50%;
+                width: 200%;
+                height: 200%;
+                background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+                transform: rotate(45deg);
+                animation: shimmer 3s infinite;
+            }
+
+        @@keyframes shimmer {
+            0% {
+                transform: translateX(-100%) translateY(-100%) rotate(45deg);
+            }
+
+            100% {
+                transform: translateX(100%) translateY(100%) rotate(45deg);
+            }
+        }
+
+        .product-image {
+            border-radius: 15px;
+            transition: transform 0.3s ease;
+            position: relative;
+            z-index: 2;
+        }
+
+            .product-image:hover {
+                transform: scale(1.05);
+            }
+
+        .price-display {
+            background: linear-gradient(45deg, #28a745, #20c997);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+        }
+
+        .payment-section {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            border: 1px solid #dee2e6;
+        }
+
+        .payment-form {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            border: 1px solid #e9ecef;
+        }
+
+        .braintree-dropin {
+            border-radius: 10px !important;
+        }
+
+        .btn-purchase {
+            background: linear-gradient(45deg, #28a745, #20c997);
+            border: none;
+            transition: all 0.3s ease;
+            border-radius: 25px;
+            font-weight: 600;
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+            .btn-purchase:hover {
+                background: linear-gradient(45deg, #20c997, #17a2b8);
+                transform: translateY(-2px);
+                box-shadow: 0 8px 25px rgba(40,167,69,0.3);
+            }
+
+            .btn-purchase:disabled {
+                background: #6c757d;
+                transform: none;
+                box-shadow: none;
+            }
+
+        .security-badge {
+            background: linear-gradient(45deg, #007bff, #0056b3);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 15px rgba(0,123,255,0.3);
+        }
+
+        .trust-indicator {
+            background: rgba(40,167,69,0.1);
+            border: 2px solid #28a745;
+            border-radius: 15px;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .product-info-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            border: 1px solid #dee2e6;
+        }
+
+        .feature-icon {
+            color: #28a745;
+            font-size: 1.2rem;
+            margin-right: 10px;
+        }
+
+        .loading-spinner {
+            display: none;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #007bff;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            margin-right: 10px;
+        }
+
+        @@keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .error-message {
+            background: linear-gradient(45deg, #dc3545, #c82333);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .breadcrumb {
+            background: transparent;
+            padding: 15px 0;
+            margin-bottom: 20px;
+            border-radius: 10px;
+        }
+
+        .breadcrumb-item {
+            font-size: 0.95rem;
+        }
+
+            .breadcrumb-item a {
+                color: #6c757d;
+                text-decoration: none;
+                transition: color 0.3s ease;
+            }
+
+                .breadcrumb-item a:hover {
+                    color: #007bff;
+                }
+
+            .breadcrumb-item.active {
+                color: #495057;
+                font-weight: 500;
+            }
+
+            .breadcrumb-item + .breadcrumb-item::before {
+                content: "›";
+                color: #6c757d;
+                font-weight: bold;
+                padding: 0 8px;
+            }
+
+        .test-card-box {
+            transition: all 0.3s ease;
+            border: 1px solid #dee2e6 !important;
+        }
+
+            .test-card-box:hover {
+                border-color: #007bff !important;
+                box-shadow: 0 2px 8px rgba(0,123,255,0.15);
+            }
+
+        .copy-btn {
+            transition: all 0.3s ease;
+            font-size: 0.85rem;
+        }
+
+            .copy-btn:hover {
+                background-color: #007bff;
+                border-color: #007bff;
+                color: white;
+            }
+
+            .copy-btn.copied {
+                background-color: #28a745;
+                border-color: #28a745;
+                color: white;
+            }
+
+        /* Braintree Dropin Customization */
+        .braintree-dropin__toggle {
+            background: linear-gradient(45deg, #007bff, #0056b3) !important;
+            border-radius: 8px !important;
+        }
+
+        .braintree-dropin__card {
+            border-radius: 10px !important;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1) !important;
+        }
+    </style>
+}
+
+@if (Model == null)
+{
+    <div class="text-center py-5">
+        <div class="mb-4">
+            <i class="fas fa-exclamation-triangle fa-5x text-warning"></i>
+        </div>
+        <h3 class="text-muted mb-3">Product Not Found</h3>
+        <p class="text-muted">The product you're looking for doesn't exist or has been removed.</p>
+        <a asp-controller="Products" asp-action="Index" class="btn btn-primary">
+            <i class="fas fa-arrow-left me-2"></i>Back to Products
+        </a>
+    </div>
+}
+else
+{
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a asp-controller="Products" asp-action="Index">
+                    <i class="fas fa-home me-1"></i>Products
+                </a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">@Model.Name</li>
+        </ol>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="product-hero text-white py-4 mb-4 text-center">
+        <h1 class="display-5 fw-bold mb-2">@Model.Name</h1>
+        <div class="security-badge d-inline-block">
+            <i class="fas fa-shield-alt me-2"></i>Secure Braintree Checkout
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <!-- Product Image -->
+        <div class="col-lg-6">
+            <div class="product-image-container">
+                <img src="@Model.ImageUrl" class="product-image img-fluid w-100" alt="@Model.Name" style="height: 400px; object-fit: cover;">
+            </div>
+
+            <!-- Test Card Numbers -->
+            <div class="mt-4">
+                <h6 class="fw-bold text-dark mb-3">
+                    <i class="fas fa-credit-card me-2 text-primary"></i>Test Card Numbers
+                </h6>
+                <div class="row g-2">
+                    <div class="col-12">
+                        <div class="test-card-box p-3 border rounded bg-light d-flex justify-content-between align-items-center">
+                            <div>
+                                <div class="fw-bold text-dark">American Express</div>
+                                <code class="text-muted">378282246310005</code>
+                            </div>
+                            <button class="btn btn-outline-primary btn-sm copy-btn" onclick="copyToClipboard('378282246310005', this)">
+                                <i class="fas fa-copy me-1"></i>Copy
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="test-card-box p-3 border rounded bg-light d-flex justify-content-between align-items-center">
+                            <div>
+                                <div class="fw-bold text-dark">Visa</div>
+                                <code class="text-muted">4111111111111111</code>
+                            </div>
+                            <button class="btn btn-outline-primary btn-sm copy-btn" onclick="copyToClipboard('4111111111111111', this)">
+                                <i class="fas fa-copy me-1"></i>Copy
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <small class="text-muted d-block mt-2">
+                    <i class="fas fa-info-circle me-1"></i>Use any future expiry date and any CVV
+                </small>
+            </div>
+        </div>
+
+        <!-- Product Info & Payment -->
+        <div class="col-lg-6">
+            <!-- Product Information -->
+            <div class="product-info-card mb-4">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                    <div>
+                        <h2 class="h3 fw-bold text-dark">@Model.Name</h2>
+                        <div class="price-display display-4 mb-3">$@Model.Price.ToString("###,###.00")</div>
+                    </div>
+                    <span class="badge bg-success fs-6 px-3 py-2">
+                        <i class="fas fa-check me-1"></i>In Stock
+                    </span>
+                </div>
+
+                <p class="text-muted mb-4">
+                    Premium quality product perfect for demonstration of secure credit card payment processing with Braintree integration.
+                    Experience seamless checkout with secure card processing.
+                </p>
+
+                <div class="row g-3 mb-4">
+                    <div class="col-6">
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-award feature-icon"></i>
+                            <span>Premium Quality</span>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-certificate feature-icon"></i>
+                            <span>Authentic Product</span>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-headset feature-icon"></i>
+                            <span>24/7 Support</span>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-shield-alt feature-icon"></i>
+                            <span>Secure Payment</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+     
+            <div class="payment-section">
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <h4 class="fw-bold text-dark mb-0">Secure Checkout</h4>
+                    <div class="text-muted">
+                        <i class="fab fa-cc-visa me-1"></i>
+                        <i class="fab fa-cc-mastercard me-1"></i>
+                        <i class="fab fa-cc-amex me-1"></i>
+                        <i class="fab fa-cc-discover me-1"></i>
+                    </div>
+                </div>
+
+                <div class="error-message" id="error-message">
+                    <i class="fas fa-exclamation-circle me-2"></i>
+                    <span id="error-text"></span>
+                </div>
+
+                <form id="payment-form" action="/api/payments/process" method="post" class="payment-form">
+                    <div class="mb-4">
+                        <label class="form-label fw-bold text-dark mb-3">
+                            <i class="fas fa-credit-card me-2"></i>Credit/Debit Card
+                        </label>
+                        <div id="dropin-container" class="braintree-dropin"></div>
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-purchase text-white" id="submit-button">
+                            <div class="loading-spinner" id="loading-spinner"></div>
+                            <i class="fas fa-lock me-2"></i>
+                            <span id="button-text">Complete Secure Purchase - $@Model.Price.ToString("###,###.00")</span>
+                        </button>
+                    </div>
+
+                    <input type="hidden" id="nonce" name="paymentMethodNonce" />
+                    <input type="hidden" name="productId" value="@Model.Id" />
+                </form>
+
+                <div class="text-center mt-3">
+                    <small class="text-muted">
+                        <i class="fas fa-lock me-1"></i>
+                        Your payment information is encrypted and secure
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        let dropinInstance = null;
+
+        async function getClientToken() {
+            try {
+                const response = await fetch('/api/payments/client-token', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Failed to get client token: ${response.status} ${response.statusText}`);
+                }
+
+                const data = await response.json();
+                return data.clientToken;
+            } catch (error) {
+                console.error('Error getting client token:', error);
+                showError('Failed to initialize payment system. Please refresh the page.');
+                throw error;
+            }
+        }
+
+        async function initializeBraintree() {
+            try {
+                showLoading(true);
+                const clientToken = await getClientToken();
+                const form = document.getElementById('payment-form');
+
+                braintree.dropin.create({
+                    authorization: clientToken,
+                    container: '#dropin-container'
+                }, (error, instance) => {
+                    showLoading(false);
+
+                    if (error) {
+                        console.error('Braintree initialization error:', error);
+                        showError('Failed to initialize payment form. Please refresh the page.');
+                        return;
+                    }
+
+                    dropinInstance = instance;
+
+                    form.addEventListener('submit', async (event) => {
+                        event.preventDefault();
+                        await handlePaymentSubmission();
+                    });
+                });
+
+            } catch (error) {
+                showLoading(false);
+                console.error('Failed to initialize Braintree:', error);
+                showError('Payment system initialization failed. Please refresh the page.');
+            }
+        }
+
+        async function handlePaymentSubmission() {
+            if (!dropinInstance) {
+                showError('Payment system not ready. Please refresh the page.');
+                return;
+            }
+
+            showLoading(true);
+            hideError();
+
+            try {
+                const payload = await dropinInstance.requestPaymentMethod();
+
+                const formData = new FormData();
+                formData.append('paymentMethodNonce', payload.nonce);
+                formData.append('productId', document.querySelector('input[name="productId"]').value);
+   
+                const response = await fetch('/api/payments/process', {
+                method: 'POST',
+                body: formData
+                });
+
+                if (response.ok) {
+                
+                window.location.href = '/success';
+                } else {
+                showLoading(false);
+                showError('Payment processing failed. Please try again.');
+                }
+
+            } catch (error) {
+                showLoading(false);
+                console.error('Payment method error:', error);
+
+                if (error.message === 'No payment method is available.') {
+                    showError('Please select a payment method.');
+                } else {
+                    showError('Payment processing failed. Please try again.');
+                }
+            }
+        }
+
+        function showLoading(show) {
+            const button = document.getElementById('submit-button');
+            const spinner = document.getElementById('loading-spinner');
+            const buttonText = document.getElementById('button-text');
+
+            if (show) {
+                button.disabled = true;
+                spinner.style.display = 'inline-block';
+                buttonText.textContent = 'Processing...';
+            } else {
+                button.disabled = false;
+                spinner.style.display = 'none';
+                buttonText.textContent = 'Complete Secure Purchase - $@Model.Price.ToString("###,###.00")';
+            }
+        }
+
+        function showError(message) {
+            const errorDiv = document.getElementById('error-message');
+            const errorText = document.getElementById('error-text');
+            errorText.textContent = message;
+            errorDiv.style.display = 'block';
+
+            // Auto-hide after 5 seconds
+            setTimeout(hideError, 5000);
+        }
+
+        function hideError() {
+            document.getElementById('error-message').style.display = 'none';
+        }
+
+        function copyToClipboard(text, button) {
+            navigator.clipboard.writeText(text).then(function() {
+                // Change button appearance
+                const icon = button.querySelector('i');
+                const originalText = button.innerHTML;
+
+                button.innerHTML = '<i class="fas fa-check me-1"></i>Copied';
+                button.classList.add('copied');
+
+                // Reset after 2 seconds
+                setTimeout(() => {
+                    button.innerHTML = originalText;
+                    button.classList.remove('copied');
+                }, 2000);
+
+            }).catch(function(err) {
+                console.error('Failed to copy: ', err);
+                alert('Failed to copy to clipboard');
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeBraintree();
+        });
+    </script>
+}

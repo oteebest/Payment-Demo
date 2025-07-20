@@ -1,0 +1,15 @@
+C:\Projects\Personal\Payments\Payment.Demo\Payment.Demo.Domain\bin\Debug\net8.0\Payment.Demo.Domain.deps.json
+C:\Projects\Personal\Payments\Payment.Demo\Payment.Demo.Domain\bin\Debug\net8.0\Payment.Demo.Domain.dll
+C:\Projects\Personal\Payments\Payment.Demo\Payment.Demo.Domain\bin\Debug\net8.0\Payment.Demo.Domain.pdb
+C:\Projects\Personal\Payments\Payment.Demo\Payment.Demo.Domain\bin\Debug\net8.0\Payment.Demo.Core.dll
+C:\Projects\Personal\Payments\Payment.Demo\Payment.Demo.Domain\bin\Debug\net8.0\Payment.Demo.Core.pdb
+C:\Projects\Personal\Payments\Payment.Demo\Payment.Demo.Domain\obj\Debug\net8.0\Payment.Demo.Domain.csproj.AssemblyReference.cache
+C:\Projects\Personal\Payments\Payment.Demo\Payment.Demo.Domain\obj\Debug\net8.0\Payment.Demo.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Projects\Personal\Payments\Payment.Demo\Payment.Demo.Domain\obj\Debug\net8.0\Payment.Demo.Domain.AssemblyInfoInputs.cache
+C:\Projects\Personal\Payments\Payment.Demo\Payment.Demo.Domain\obj\Debug\net8.0\Payment.Demo.Domain.AssemblyInfo.cs
+C:\Projects\Personal\Payments\Payment.Demo\Payment.Demo.Domain\obj\Debug\net8.0\Payment.Demo.Domain.csproj.CoreCompileInputs.cache
+C:\Projects\Personal\Payments\Payment.Demo\Payment.Demo.Domain\obj\Debug\net8.0\Payment..4D003800.Up2Date
+C:\Projects\Personal\Payments\Payment.Demo\Payment.Demo.Domain\obj\Debug\net8.0\Payment.Demo.Domain.dll
+C:\Projects\Personal\Payments\Payment.Demo\Payment.Demo.Domain\obj\Debug\net8.0\refint\Payment.Demo.Domain.dll
+C:\Projects\Personal\Payments\Payment.Demo\Payment.Demo.Domain\obj\Debug\net8.0\Payment.Demo.Domain.pdb
+C:\Projects\Personal\Payments\Payment.Demo\Payment.Demo.Domain\obj\Debug\net8.0\ref\Payment.Demo.Domain.dll

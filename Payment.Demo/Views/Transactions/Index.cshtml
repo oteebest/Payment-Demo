@@ -1,0 +1,556 @@
+﻿@using Payment.Demo.Application.Contracts.PaymentServices
+@using Payment.Demo.Application.Contracts.TransactionServices.Dto
+@using Payment.Demo.Core.Enums
+@model TransactionHistoryDto
+
+@{
+    ViewData["Title"] = "Transaction History";
+    var currentPage = ViewBag.CurrentPage ?? 1;
+    var pageSize = ViewBag.PageSize ?? 20;
+    var totalPages = (int)Math.Ceiling((double)Model.TotalCount / pageSize);
+    var searchTerm = ViewBag.SearchTerm as string ?? "";
+    var statusFilter = ViewBag.Status as PaymentStatus?;
+}
+
+@section Styles {
+    <style>
+        .transactions-hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0 -30px 30px -30px;
+            border-radius: 0 0 15px 15px;
+            text-align: center;
+            padding: 40px 30px;
+        }
+
+        .filter-section {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            border: 1px solid #dee2e6;
+        }
+
+        .transactions-table {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            border: 1px solid #dee2e6;
+            margin-bottom: 20px;
+            width: 100%;
+            display: block;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+
+            .transactions-table table {
+                margin-bottom: 0;
+                width: 100%;
+                min-width: 1000px;
+                border-collapse: collapse;
+                display: table;
+            }
+
+            .transactions-table thead {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                display: table-header-group;
+            }
+
+                .transactions-table thead th {
+                    color: white;
+                    font-weight: 600;
+                    border: none;
+                    padding: 15px 12px;
+                    font-size: 0.9rem;
+                    text-transform: uppercase;
+                    letter-spacing: 0.5px;
+                    position: sticky;
+                    top: 0;
+                    z-index: 10;
+                }
+
+            .transactions-table tbody {
+                display: table-row-group;
+            }
+
+                .transactions-table tbody tr {
+                    display: table-row;
+                    border-bottom: 1px solid #f8f9fa;
+                }
+
+                    .transactions-table tbody tr:hover {
+                        background-color: #f8f9fa;
+                    }
+
+                .transactions-table tbody td {
+                    padding: 15px 12px;
+                    vertical-align: middle;
+                    border-color: #f8f9fa;
+                    display: table-cell;
+                    white-space: nowrap;
+                    text-wrap: auto;
+                }
+
+        .status-badge {
+            border-radius: 20px;
+            padding: 6px 12px;
+            font-weight: 600;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+            display: inline-block;
+        }
+
+        .status-submitted_for_settlement,
+        .status-settling,
+        .status-settled,
+        .status-settlement_confirmed {
+            background: linear-gradient(45deg, #28a745, #20c997);
+            color: white;
+        }
+
+        .status-pending,
+        .status-authorized {
+            background: linear-gradient(45deg, #ffc107, #e0a800);
+            color: #212529;
+        }
+
+        .status-failed,
+        .status-gateway_rejected,
+        .status-processor_declined {
+            background: linear-gradient(45deg, #dc3545, #c82333);
+            color: white;
+        }
+
+        .status-voided,
+        .status-refunded {
+            background: linear-gradient(45deg, #6c757d, #495057);
+            color: white;
+        }
+
+        .amount-cell {
+            background: linear-gradient(45deg, #28a745, #20c997);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+            font-size: 1.1rem;
+        }
+
+        .fulfillment-badge {
+            background: linear-gradient(45deg, #17a2b8, #138496);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            display: inline-block;
+            margin-top: 5px;
+        }
+
+        .pagination-custom .page-link {
+            border-radius: 25px;
+            margin: 0 3px;
+            border: none;
+            color: #007bff;
+            font-weight: 500;
+        }
+
+        .pagination-custom .page-item.active .page-link {
+            background: linear-gradient(45deg, #007bff, #0056b3);
+            border: none;
+        }
+
+        .filter-btn {
+            background: linear-gradient(45deg, #007bff, #0056b3);
+            border: none;
+            border-radius: 25px;
+            padding: 10px 25px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+            .filter-btn:hover {
+                background: linear-gradient(45deg, #0056b3, #004085);
+                transform: translateY(-2px);
+            }
+
+        .clear-filters-btn {
+            background: transparent;
+            border: 2px solid #6c757d;
+            color: #6c757d;
+            border-radius: 25px;
+            padding: 8px 25px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+            .clear-filters-btn:hover {
+                background: #6c757d;
+                color: white;
+            }
+
+        .stats-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            border: 1px solid #e9ecef;
+        }
+
+        .stats-number {
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(45deg, #007bff, #0056b3);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #6c757d;
+        }
+
+        .method-icon {
+            color: #007bff;
+            margin-right: 5px;
+        }
+
+        .reference-code {
+            font-family: 'Courier New', monospace;
+            font-size: 0.8rem;
+            background: #f8f9fa;
+            padding: 2px 6px;
+            border-radius: 4px;
+            border: 1px solid #e9ecef;
+        }
+
+        .product-cell {
+            min-width: 120px;
+            max-width: 160px;
+        }
+
+        .amount-cell-container {
+            min-width: 100px;
+        }
+
+        .status-cell {
+            min-width: 140px;
+        }
+
+        .method-cell {
+            min-width: 120px;
+        }
+
+        .customer-cell {
+            min-width: 180px;
+            max-width: 200px;
+            white-space: normal;
+            word-break: break-word;
+        }
+
+        .date-cell {
+            min-width: 120px;
+        }
+
+        .reference-cell {
+            min-width: 150px;
+        }
+
+        .actions-cell {
+            min-width: 80px;
+        }
+
+        @@media (max-width: 768px) {
+            .transactions-table {
+                font-size: 0.85rem;
+            }
+
+                .transactions-table table {
+                    min-width: 900px;
+                }
+
+                .transactions-table thead th,
+                .transactions-table tbody td {
+                    padding: 10px 8px;
+                }
+        }
+
+        /* Fix for Safari */
+        .transactions-table {
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* Ensure proper table layout */
+        .table {
+            table-layout: auto;
+        }
+    </style>
+}
+
+<!-- Hero Section -->
+<div class="transactions-hero text-white">
+    <h1 class="display-5 fw-bold mb-3">Transaction History</h1>
+    <p class="lead mb-0">Complete transaction records with Braintree processing details</p>
+</div>
+
+<!-- Filters Section -->
+<div class="filter-section">
+    <form method="get" asp-action="Index">
+        <div class="row g-3 align-items-end">
+            <div class="col-md-4">
+                <label class="form-label fw-bold">
+                    <i class="fas fa-search me-2"></i>Search
+                </label>
+                <input type="text" name="searchTerm" value="@searchTerm" class="form-control" placeholder="Search by email, product, or reference...">
+            </div>
+            <div class="col-md-3">
+                <label class="form-label fw-bold">
+                    <i class="fas fa-filter me-2"></i>Status
+                </label>
+                <select name="status" class="form-select">
+                    <option value="">All Statuses</option>
+                    <option value="@PaymentStatus.AUTHORIZED" selected="@(statusFilter == PaymentStatus.AUTHORIZED)">Authorized</option>
+                    <option value="@PaymentStatus.SUBMITTED_FOR_SETTLEMENT" selected="@(statusFilter == PaymentStatus.SUBMITTED_FOR_SETTLEMENT)">Submitted for Settlement</option>
+                    <option value="@PaymentStatus.SETTLING" selected="@(statusFilter == PaymentStatus.SETTLING)">Settling</option>
+                    <option value="@PaymentStatus.SETTLED" selected="@(statusFilter == PaymentStatus.SETTLED)">Settled</option>
+                    <option value="@PaymentStatus.SETTLEMENT_CONFIRMED" selected="@(statusFilter == PaymentStatus.SETTLEMENT_CONFIRMED)">Settlement Confirmed</option>
+                    <option value="@PaymentStatus.FAILED" selected="@(statusFilter == PaymentStatus.FAILED)">Failed</option>
+                    <option value="@PaymentStatus.VOIDED" selected="@(statusFilter == PaymentStatus.VOIDED)">Voided</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <label class="form-label fw-bold">Page Size</label>
+                <select name="pageSize" class="form-select">
+                    <option value="10" selected="@(pageSize == 10)">10</option>
+                    <option value="20" selected="@(pageSize == 20)">20</option>
+                    <option value="50" selected="@(pageSize == 50)">50</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-primary filter-btn">
+                        <i class="fas fa-search me-2"></i>Filter
+                    </button>
+                    <a asp-action="Index" class="btn clear-filters-btn">
+                        <i class="fas fa-times me-2"></i>Clear
+                    </a>
+                </div>
+            </div>
+        </div>
+        <input type="hidden" name="pageNumber" value="1">
+    </form>
+</div>
+
+<!-- Transactions Table -->
+@if (Model.PaymentHistory.Any())
+{
+    <div class="transactions-table">
+        <table class="table table-hover mb-0">
+            <thead>
+                <tr>
+                    <th class="product-cell">Product</th>
+                    <th class="amount-cell-container">Amount</th>
+                    <th class="status-cell">Status</th>
+                    <th class="method-cell">Method</th>
+                    <th class="customer-cell">Customer</th>
+                    <th class="date-cell">Date/Time</th>
+                    <th class="reference-cell">Reference</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var transaction in Model.PaymentHistory)
+                {
+                    <tr>
+                        <td class="product-cell">
+                            <div class="fw-bold text-dark">@transaction.ProductName</div>
+                            @if (transaction.ShouldFulfillOrder)
+                            {
+                                <div>
+                                    <span class="fulfillment-badge">Ready to Fulfill</span>
+                                </div>
+                            }
+                        </td>
+
+                        <td class="amount-cell-container">
+                            <div class="amount-cell">$@transaction.Amount.ToString("F2")</div>
+                            <small class="text-muted d-block">@transaction.Currency</small>
+                        </td>
+
+                        <td class="status-cell">
+                            <span class="status-badge status-@transaction.Status.ToString().ToLower()">
+                                @if (transaction.Status == PaymentStatus.SETTLED ||
+                               transaction.Status == PaymentStatus.SETTLEMENT_CONFIRMED ||
+                               transaction.Status == PaymentStatus.SUBMITTED_FOR_SETTLEMENT)
+                                {
+                                    <i class="fas fa-check me-1"></i>
+                                }
+                                else if (transaction.Status == PaymentStatus.FAILED)
+                                {
+                                    <i class="fas fa-times me-1"></i>
+                                }
+                                else if (transaction.Status == PaymentStatus.AUTHORIZED)
+                                {
+                                    <i class="fas fa-clock me-1"></i>
+                                }
+                                else if (transaction.Status == PaymentStatus.VOIDED)
+                                {
+                                    <i class="fas fa-ban me-1"></i>
+                                }
+                                @transaction.PaymentStatusText.Replace("_", " ")
+                            </span>
+                        </td>
+
+                        <td class="method-cell">
+                            <i class="fas fa-credit-card method-icon"></i>
+                            @transaction.MethodText
+                        </td>
+
+                        <td class="customer-cell">
+                            <div class="text-dark">@(transaction.CustomerEmail ?? "N/A")</div>
+                        </td>
+
+                        <td class="date-cell">
+                            <div class="text-dark">@transaction.CreatedAt.ToString("MMM dd, yyyy")</div>
+                            <small class="text-muted d-block">@transaction.CreatedAt.ToString("hh:mm tt")</small>
+                        </td>
+
+                        <td class="reference-cell">
+                            @if (!string.IsNullOrEmpty(transaction.GatewayReference))
+                            {
+                                <code class="reference-code">@transaction.GatewayReference</code>
+                            }
+                            else
+                            {
+                                <span class="text-muted">N/A</span>
+                            }
+                        </td>
+
+             
+                    </tr>
+
+                    @if (!string.IsNullOrEmpty(transaction.ErrorMessage))
+                    {
+                        <tr>
+                            <td colspan="8" class="p-0">
+                                <div class="alert alert-danger mb-0 mx-3 my-2">
+                                    <small>
+                                        <i class="fas fa-exclamation-triangle me-1"></i>
+                                        <strong>Error:</strong> @transaction.ErrorMessage
+                                    </small>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Pagination -->
+    @if (totalPages > 1)
+    {
+        <nav aria-label="Transactions pagination" class="mt-4">
+            <ul class="pagination pagination-custom justify-content-center">
+                @if (currentPage > 1)
+                {
+                    <li class="page-item">
+                        <a class="page-link" asp-action="Index" asp-route-pageNumber="@(currentPage - 1)" asp-route-pageSize="@pageSize" asp-route-searchTerm="@searchTerm" asp-route-status="@statusFilter">
+                            <i class="fas fa-chevron-left"></i>
+                        </a>
+                    </li>
+                }
+
+                @for (int i = Math.Max(1, currentPage - 2); i <= Math.Min(totalPages, currentPage + 2); i++)
+                {
+                    <li class="page-item @(i == currentPage ? "active" : "")">
+                        <a class="page-link" asp-action="Index" asp-route-pageNumber="@i" asp-route-pageSize="@pageSize" asp-route-searchTerm="@searchTerm" asp-route-status="@statusFilter">
+                            @i
+                        </a>
+                    </li>
+                }
+
+                @if (currentPage < totalPages)
+                {
+                    <li class="page-item">
+                        <a class="page-link" asp-action="Index" asp-route-pageNumber="@(currentPage + 1)" asp-route-pageSize="@pageSize" asp-route-searchTerm="@searchTerm" asp-route-status="@statusFilter">
+                            <i class="fas fa-chevron-right"></i>
+                        </a>
+                    </li>
+                }
+            </ul>
+        </nav>
+    }
+}
+else
+{
+    <div class="empty-state">
+        <div class="mb-4">
+            <i class="fas fa-receipt fa-5x text-muted"></i>
+        </div>
+        <h3 class="text-muted mb-3">No Transactions Found</h3>
+        <p class="text-muted mb-4">
+            @if (!string.IsNullOrEmpty(searchTerm) || statusFilter.HasValue)
+            {
+                <text>No transactions match your current filters.</text>
+            }
+            else
+            {
+                <text>You haven't processed any transactions yet.</text>
+            }
+        </p>
+        <div>
+            @if (!string.IsNullOrEmpty(searchTerm) || statusFilter.HasValue)
+            {
+                <a asp-action="Index" class="btn btn-primary">
+                    <i class="fas fa-times me-2"></i>Clear Filters
+                </a>
+            }
+            <a asp-controller="Products" asp-action="Index" class="btn btn-outline-primary">
+                <i class="fas fa-shopping-bag me-2"></i>Start Shopping
+            </a>
+        </div>
+    </div>
+}
+
+<script>
+    function showTransactionDetails(transactionId) {
+        // You can implement a modal or redirect to a details page
+        alert(`Transaction details for ID: ${transactionId}`);
+    }
+
+    function fulfillOrder(transactionId) {
+        if (confirm('Mark this order as fulfilled?')) {
+            // Call your fulfill order endpoint
+            alert(`Order fulfillment for transaction ${transactionId}`);
+        }
+    }
+
+    function copyToClipboard(text) {
+        navigator.clipboard.writeText(text).then(function() {
+            // Show a temporary success message
+            const toast = document.createElement('div');
+            toast.className = 'position-fixed top-0 end-0 p-3';
+            toast.style.zIndex = '9999';
+            toast.innerHTML = `
+                <div class="alert alert-success alert-dismissible fade show">
+                    <i class="fas fa-check me-2"></i>Reference copied to clipboard!
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            `;
+            document.body.appendChild(toast);
+
+            setTimeout(() => {
+                toast.remove();
+            }, 3000);
+        }).catch(function(err) {
+            console.error('Failed to copy: ', err);
+            alert('Failed to copy to clipboard');
+        });
+    }
+</script>

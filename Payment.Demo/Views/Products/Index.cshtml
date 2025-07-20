@@ -1,0 +1,201 @@
+﻿@using Payment.Demo.Application.Contracts.ProductServices.Dto
+@model List<ProductDto>
+
+@{
+    ViewData["Title"] = "Shop Our Products";
+}
+
+@section Styles {
+    <style>
+        .hero-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: -30px -30px 30px -30px;
+            border-radius: 0 0 15px 15px;
+        }
+
+        .product-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: none;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+            .product-card:hover {
+                transform: translateY(-10px);
+                box-shadow: 0 15px 35px rgba(0,0,0,0.1) !important;
+            }
+
+        .product-image {
+            transition: transform 0.3s ease;
+            border-radius: 15px 15px 0 0;
+        }
+
+        .product-card:hover .product-image {
+            transform: scale(1.05);
+        }
+
+        .btn-buy-now {
+            background: linear-gradient(45deg, #007bff, #0056b3);
+            border: none;
+            transition: all 0.3s ease;
+            border-radius: 25px;
+            font-weight: 600;
+            padding: 12px 20px;
+        }
+
+            .btn-buy-now:hover {
+                background: linear-gradient(45deg, #0056b3, #004085);
+                transform: translateY(-2px);
+                box-shadow: 0 5px 15px rgba(0,123,255,0.3);
+            }
+
+        .price-tag {
+            background: linear-gradient(45deg, #28a745, #20c997);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .trust-section {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 15px;
+            padding: 40px 20px;
+            margin-top: 50px;
+        }
+
+        .trust-icon {
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+
+            .trust-icon:hover {
+                transform: scale(1.1);
+            }
+
+        .badge-stock {
+            background: linear-gradient(45deg, #28a745, #20c997) !important;
+            border: 2px solid white;
+            box-shadow: 0 2px 8px rgba(40,167,69,0.3);
+        }
+    </style>
+}
+
+<div class="hero-section text-white py-5 mb-4">
+    <div class="text-center">
+        <h1 class="display-4 fw-bold mb-3">Premium Tech Store</h1>
+        <p class="lead mb-4">Discover amazing products with secure Braintree payments</p>
+        <div class="badge bg-warning text-dark px-4 py-2 fs-6 rounded-pill">
+            <i class="fas fa-shield-alt me-2"></i>Secure Payment Demo
+        </div>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-12">
+        <h2 class="h3 text-center mb-3">Featured Products</h2>
+        <p class="text-muted text-center mb-5">All payments processed securely through Braintree</p>
+    </div>
+</div>
+
+<div class="row g-4 mb-5">
+    @foreach (var product in Model)
+    {
+        <div class="col-lg-4 col-md-6 col-sm-12">
+            <div class="card h-100 shadow-sm product-card">
+                <div class="position-relative overflow-hidden">
+                    <img src="@product.ImageUrl" class="card-img-top product-image" alt="@product.Name" style="height: 280px; object-fit: cover;">
+                    <div class="position-absolute top-0 end-0 m-3">
+                        <span class="badge badge-stock text-white px-3 py-2 rounded-pill">
+                            <i class="fas fa-check me-1"></i>In Stock
+                        </span>
+                    </div>
+                </div>
+
+                <div class="card-body d-flex flex-column p-4">
+                    <h5 class="card-title text-dark fw-bold mb-3">@product.Name</h5>
+                    <p class="card-text text-muted flex-grow-1 mb-4">
+                        High-quality product perfect for demonstration of secure payment processing with Braintree integration.
+                    </p>
+
+                    <div class="mt-auto">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <div>
+                                <span class="h3 price-tag fw-bold mb-0">$@product.Price.ToString("F2")</span>
+                                <small class="text-success d-block mt-1">
+                                    <i class="fas fa-shipping-fast me-1"></i>Free shipping included
+                                </small>
+                            </div>
+                            <div class="text-end">
+                                <small class="text-primary">
+                                    <i class="fas fa-truck me-1"></i>Fast delivery
+                                </small>
+                            </div>
+                        </div>
+
+                        <a asp-controller="Products" asp-action="Details" asp-route-id="@product.Id"
+                           class="btn btn-primary btn-buy-now w-100 text-white">
+                            <i class="fas fa-shopping-cart me-2"></i>Buy Now
+                        </a>
+
+                        <div class="text-center mt-3">
+                            <small class="text-muted">
+                                <i class="fab fa-cc-visa me-1"></i>
+                                <i class="fab fa-cc-mastercard me-1"></i>
+                                <i class="fab fa-paypal me-1"></i>
+                                <i class="fab fa-apple-pay me-1"></i>
+                                Secure payment
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@if (!Model.Any())
+{
+    <div class="text-center py-5">
+        <div class="mb-4">
+            <i class="fas fa-box-open fa-5x text-muted"></i>
+        </div>
+        <h3 class="text-muted mb-3">No Products Available</h3>
+        <p class="text-muted">Check back later for amazing deals!</p>
+        <button class="btn btn-outline-primary" onclick="location.reload()">
+            <i class="fas fa-refresh me-2"></i>Refresh Page
+        </button>
+    </div>
+}
+
+<!-- Trust indicators -->
+<div class="trust-section">
+    <div class="row text-center">
+        <div class="col-md-3 col-6 mb-4">
+            <div class="trust-icon">
+                <i class="fas fa-shield-alt fa-3x text-success mb-3"></i>
+                <h6 class="fw-bold text-dark">Secure Payment</h6>
+                <small class="text-muted">256-bit SSL encryption</small>
+            </div>
+        </div>
+        <div class="col-md-3 col-6 mb-4">
+            <div class="trust-icon">
+                <i class="fas fa-shipping-fast fa-3x text-primary mb-3"></i>
+                <h6 class="fw-bold text-dark">Fast Shipping</h6>
+                <small class="text-muted">Free 2-day delivery</small>
+            </div>
+        </div>
+        <div class="col-md-3 col-6 mb-4">
+            <div class="trust-icon">
+                <i class="fas fa-undo fa-3x text-warning mb-3"></i>
+                <h6 class="fw-bold text-dark">Easy Returns</h6>
+                <small class="text-muted">30-day return policy</small>
+            </div>
+        </div>
+        <div class="col-md-3 col-6 mb-4">
+            <div class="trust-icon">
+                <i class="fas fa-headset fa-3x text-info mb-3"></i>
+                <h6 class="fw-bold text-dark">24/7 Support</h6>
+                <small class="text-muted">Always here to help</small>
+            </div>
+        </div>
+    </div>
+</div>
